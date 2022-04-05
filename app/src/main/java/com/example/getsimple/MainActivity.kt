@@ -27,7 +27,8 @@ class MainActivity : AppCompatActivity() {
        val button: Button = findViewById(R.id.btnUpdatePokemon)
         button.setOnClickListener {
            Toast.makeText(this,"enviado", Toast.LENGTH_SHORT).show()
-                getPokemonList(Integer.parseInt(binding.etPokemonAmount.text.toString()))
+            getPokemonList(Integer.parseInt(binding.etPokemonAmount.text.toString()))
+
 
 
     }}
@@ -37,11 +38,12 @@ class MainActivity : AppCompatActivity() {
 
         val jsonRequest = JsonObjectRequest(url, Response.Listener<JSONObject>{response ->
             Log.i("JSONRESPONSE", response.getJSONArray("results").toString())
+
+            binding.rvInfoEntries.adapter = MainAdapter(response.getJSONArray("results"))
         },
         Response.ErrorListener { error ->
             Log.w("JSONRESPONSE", error.message as String)
         })
-
         queue.add((jsonRequest))
 
     }
